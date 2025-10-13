@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import Logo from "../images/Julien.jpg";
 
 const Header = ({ darkMode, toggleDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,19 +37,17 @@ const Header = ({ darkMode, toggleDarkMode }) => {
         <div className="flex items-center justify-between">
           {/* Logo */}
 
-          <div>
-            <img src="../images/julien.png" alt="Logo" />
-          </div>
-
-          {/* <motion.a
+          <motion.a
             href="#home"
             className="text-2xl font-bold bg-gradient-to-r from-wax-yellow via-wax-orange to-wax-red bg-clip-text text-transparent"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            ADOBOE CJ
-          </motion.a> */}
+            <div className="w-[60px] h-[60px] rounded-full overflow-hidden border-2 border-wax-orange">
+              <img src={Logo} alt="Logo" />
+            </div>
+          </motion.a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Heart, Mail, Phone, Linkedin, Github } from "lucide-react";
+import Logo from "../images/Julien.jpg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,9 +11,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* About */}
           <div>
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-wax-yellow via-wax-orange to-wax-red bg-clip-text text-transparent mb-4">
-              J
-            </h3>
+            <div className="w-[60px] h-[60px] mb-4 rounded-full overflow-hidden border-2 border-wax-orange">
+              <img src={Logo} alt="Logo" />
+            </div>
+
             <p className="text-gray-400 leading-relaxed mb-4">
               Développeur & Manager digital passionné par la création de
               solutions digitales innovantes.
