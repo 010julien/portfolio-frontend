@@ -10,6 +10,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import FloatingTranslateButton from "./components/FloatingTranslateButton";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import Activite from "./components/Activite";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -49,6 +50,7 @@ function App() {
           <Projects />
           <Management />
           <Experience />
+          <Activite />
           <Contact />
         </main>
         <Footer />

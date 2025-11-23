@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Mail,
@@ -14,28 +13,29 @@ import {
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmit = (e) => {
+    // Empêcher la navigation par défaut pour afficher le message localement,
+    // et envoyer le formulaire en arrière-plan via fetch vers FormSubmit.
     e.preventDefault();
-    // Here you would typically send the form data to a backend
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    const form = e.target;
+    const action = form.action;
+    const formData = new FormData(form);
+
+    fetch(action, {
+      method: "POST",
+      body: formData,
+      headers: { Accept: "application/json" },
+    })
+      .then(() => {
+        setSubmitted(true);
+        form.reset();
+        setTimeout(() => setSubmitted(false), 5000);
+      })
+      .catch(() => {
+        // Échec silencieux (on peut ajouter un message d'erreur si souhaité)
+      });
   };
 
   const contactInfo = [
@@ -64,7 +64,7 @@ const Contact = () => {
       icon: Linkedin,
       title: "LinkedIn",
       value: "ADOBOE Comlan Julien",
-      link: "https://linkedin.com",
+      link: "https://www.linkedin.com/in/julien-comlan-adoboe-76bb47396",
       color: "wax-blue",
     },
   ];
@@ -96,10 +96,10 @@ const Contact = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
+          {/* === INFOS CONTACT === */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
@@ -108,10 +108,9 @@ const Contact = () => {
                 Informations de contact
               </h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
-                Je suis toujours ouvert aux nouvelles opportunités,
-                collaborations et discussions autour des projets digitaux. Que
-                ce soit pour un développement web, la gestion d'un projet ou
-                simplement échanger sur les technologies, contactez-moi !
+                Je suis toujours ouvert aux nouvelles opportunités et
+                collaborations. Développement web, gestion de projet ou simple
+                échange tech → écrivez-moi !
               </p>
             </div>
 
@@ -122,9 +121,7 @@ const Contact = () => {
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -30 }}
-                    animate={
-                      isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }
-                    }
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                   >
                     {info.link ? (
@@ -172,10 +169,10 @@ const Contact = () => {
               })}
             </div>
 
-            {/* Social Links */}
+            {/* === RÉSEAUX SOCIAUX === */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.8 }}
               className="pt-6"
             >
@@ -184,10 +181,10 @@ const Contact = () => {
               </h4>
               <div className="flex gap-4">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/julien-comlan-adoboe-76bb47396"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 bg-white dark:bg-gray-900 rounded-lg hover:bg-wax-blue hover:text-white transition-all duration-300 transform hover:scale-110 group"
+                  className="p-4 bg-white dark:bg-gray-900 rounded-lg hover:bg-wax-blue hover:text-white transition-all duration-300 transform hover:scale-110"
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="w-6 h-6" />
@@ -196,7 +193,7 @@ const Contact = () => {
                   href="https://github.com/010julien"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 bg-white dark:bg-gray-900 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-110 group"
+                  className="p-4 bg-white dark:bg-gray-900 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-110"
                   aria-label="GitHub"
                 >
                   <Github className="w-6 h-6" />
@@ -205,10 +202,10 @@ const Contact = () => {
             </motion.div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* === FORMULAIRE (avec FormSubmit) === */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-xl"
           >
@@ -223,11 +220,28 @@ const Contact = () => {
                 className="mb-6 p-4 bg-wax-green/20 border border-wax-green/30 rounded-lg flex items-center gap-3 text-wax-green"
               >
                 <CheckCircle className="w-5 h-5" />
-                <span>Message envoyé avec succès !</span>
+                <span>
+                  Message envoyé avec succès ! Je vous réponds très vite
+                </span>
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              action="https://formsubmit.co/adoboejulien010@gmail.com"
+              method="POST"
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+              {/* Anti-spam invisible */}
+              <input type="text" name="_honey" style={{ display: "none" }} />
+              <input type="hidden" name="_captcha" value="false" />
+              {/* Page de remerciement optionnelle */}
+              <input
+                type="hidden"
+                name="_next"
+                value="https://tonsite.com/merci"
+              />
+
               <div>
                 <label
                   htmlFor="name"
@@ -237,13 +251,11 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  id="name"
                   name="name"
-                  value={formData.name}
-                  onChange={handleChange}
+                  id="name"
                   required
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-wax-orange focus:border-transparent transition-all outline-none"
-                  placeholder="Votre nom"
+                  placeholder="Julien Dupont"
                 />
               </div>
 
@@ -256,13 +268,11 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
-                  id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  id="email"
                   required
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-wax-orange focus:border-transparent transition-all outline-none"
-                  placeholder="votre.email@example.com"
+                  placeholder="julien@example.com"
                 />
               </div>
 
@@ -275,13 +285,11 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  id="subject"
                   name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
+                  id="subject"
                   required
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-wax-orange focus:border-transparent transition-all outline-none"
-                  placeholder="Sujet de votre message"
+                  placeholder="Projet web / Collaboration / Autre"
                 />
               </div>
 
@@ -293,14 +301,12 @@ const Contact = () => {
                   Message *
                 </label>
                 <textarea
-                  id="message"
                   name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
+                  id="message"
                   rows="5"
+                  required
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-wax-orange focus:border-transparent transition-all outline-none resize-none"
-                  placeholder="Décrivez votre projet ou votre demande..."
+                  placeholder="Bonjour Julien, j'aimerais discuter d'un projet..."
                 ></textarea>
               </div>
 

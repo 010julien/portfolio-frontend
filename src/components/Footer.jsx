@@ -82,7 +82,7 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex gap-4 mt-6">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/julien-comlan-adoboe-76bb47396/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-800 rounded-lg hover:bg-wax-blue transition-all duration-300 transform hover:scale-110"

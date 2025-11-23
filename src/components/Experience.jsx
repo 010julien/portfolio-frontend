@@ -30,9 +30,9 @@ const Experience = () => {
       icon: Briefcase,
       title: "Chef de Projet - TogoSchool",
       organization: "SylvaTeam",
-      period: "2024 - Présent",
+      period: "2025 - Présent",
       description:
-        "Manager et coordination du projet TogoSchool, plateforme éducative innovante.",
+        "Manager et Resposable de la techinique du projet TogoSchool, plateforme éducative innovante.",
       highlights: [
         "Management d'équipe (dev, designer, ingénieur)",
         "Planification et suivi agile",
@@ -45,8 +45,8 @@ const Experience = () => {
       type: "project",
       icon: Code,
       title: "Développeur Full-Stack",
-      organization: "E-commerce Artisanal",
-      period: "2024 - Présent",
+      organization: "E-commerce ELISCO Technova",
+      period: "2024",
       description:
         "Développement d'une plateforme e-commerce complète pour artisans togolais avec système de paiement, gestion des stocks et interface moderne.",
       highlights: [
@@ -76,7 +76,7 @@ const Experience = () => {
     {
       type: "projet",
       icon: Award,
-      title: "Développeur Web ",
+      title: " Responsable de la technique & et la série de développement",
       organization: "Agnigban Gnan",
       period: "2025 - Présent",
       description:
