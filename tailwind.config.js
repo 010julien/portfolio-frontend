@@ -7,14 +7,22 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"JetBrains Mono"', 'monospace'],
+      },
       colors: {
         primary: {
-          DEFAULT: '#1b9abe',
-          dark: '#139cbc',
-          light: '#9fd6e2',
-          lighter: '#e9f7fe',
+          DEFAULT: '#00f3ff', // Neon Cyan
+          dark: '#00d8e3',
+          light: '#a0faff',
+          lighter: '#e0ffff',
         },
-        accent: '#139cbc',
+        dark: {
+          DEFAULT: '#0d1117', // GitHub Dark
+          lighter: '#161b22',
+        },
+        accent: '#00f3ff',
         // Keep wax colors for backward compatibility, but map to new palette
         wax: {
           yellow: '#9fd6e2',

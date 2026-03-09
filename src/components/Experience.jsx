@@ -173,9 +173,9 @@ const Experience = () => {
                   >
                     <div
                       className={`inline-block px-4 py-1 ${getBgColor(
-                        item.color
+                        item.color,
                       )} ${getIconColor(
-                        item.color
+                        item.color,
                       )} rounded-full text-sm font-semibold mb-3`}
                     >
                       {item.period}
@@ -187,7 +187,7 @@ const Experience = () => {
 
                     <p
                       className={`text-lg font-semibold mb-3 ${getIconColor(
-                        item.color
+                        item.color,
                       )}`}
                     >
                       {item.organization}
@@ -211,7 +211,7 @@ const Experience = () => {
                         >
                           <div
                             className={`w-2 h-2 ${getBgColor(
-                              item.color
+                              item.color,
                             )} rounded-full`}
                           ></div>
                           <span>{highlight}</span>
@@ -223,7 +223,7 @@ const Experience = () => {
                   {/* Icon */}
                   <div
                     className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 ${getBgColor(
-                      item.color
+                      item.color,
                     )} w-16 h-16 rounded-full items-center justify-center border-4 border-white dark:border-gray-900 shadow-lg`}
                   >
                     <Icon className={`w-8 h-8 ${getIconColor(item.color)}`} />
@@ -232,7 +232,7 @@ const Experience = () => {
                   {/* Mobile Icon */}
                   <div
                     className={`md:hidden ${getBgColor(
-                      item.color
+                      item.color,
                     )} w-12 h-12 rounded-full flex items-center justify-center`}
                   >
                     <Icon className={`w-6 h-6 ${getIconColor(item.color)}`} />
@@ -244,7 +244,7 @@ const Experience = () => {
         </div>
 
         {/* Summary Stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.6, delay: 1 }}
@@ -277,7 +277,7 @@ const Experience = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

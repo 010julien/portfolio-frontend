@@ -93,7 +93,7 @@ const Management = () => {
     company: "SylvaTeam",
     project: "TogoSchool",
     role: "Chef de Projet",
-    period: "2023 - 2024",
+    period: "2025 - Présent",
     description:
       "Direction du projet TogoSchool, une plateforme éducative innovante. Coordination d'une équipe de 5 personnes incluant développeurs, designers et ingénieurs logiciels.",
     highlights: [

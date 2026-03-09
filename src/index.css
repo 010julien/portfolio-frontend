@@ -4,9 +4,14 @@
 
 @layer base {
   body {
-    @apply transition-colors duration-300;
+    @apply transition-colors duration-300 font-mono;
+    background-color: theme("colors.white");
   }
-  
+
+  .dark body {
+    background-color: theme("colors.dark.DEFAULT");
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -16,12 +21,30 @@
   .wax-border {
     @apply border-l-4 border-wax-yellow;
   }
-  
+
   .section-padding {
     @apply py-20 px-4 md:px-8 lg:px-16;
   }
-  
+
   .container-custom {
     @apply max-w-7xl mx-auto;
+  }
+
+  /* Animation de défilement automatique pour la galerie de certifications */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+
+  .animate-scroll:hover {
+    animation-play-state: paused;
   }
 }

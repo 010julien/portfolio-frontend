@@ -4,190 +4,150 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import ActivityModal from "./ActivityModal";
 
-// Point ball
 import Activit1 from "../images/Activite1.jpg";
 import Activit2 from "../images/Julien.jpg";
-// Autre activités images à importer ici
 
 const Activite = () => {
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [showMore, setShowMore] = useState(false);
 
   const activities = [
     {
-      title: "Paintball en équipe",
+      id: "act-001",
+      commit: "a1b2c3d",
+      message: "feat: Paintball Team Building",
+      date: "2023-11-15",
+      author: "Julien Adoboe",
+      tags: ["Strategy", "Teamwork", "Adrenaline"],
       description:
-        "Qui sera le dernier debout ? clairement pas moi à la fin 😂 Moi C'est PC/CODE{}/COFFE 😂",
-      color: "blue-500",
-      achievements: [
-        "Coordination d'équipes de 5 à 10 joueurs",
-        "Planification de stratégies de jeu efficaces",
-        "Gestion du matériel et de la logistique",
-      ],
+        "Organisation d'une session de paintball pour renforcer la cohésion d'équipe. Une expérience intense qui a permis de travailler la communication sous pression.",
+      videoUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+      details: {
+        players: 10,
+        location: "Lomé Paintball Club",
+        outcome: "Victory for the Dev Team 🏆",
+      },
       images: [Activit1, Activit2],
     },
-    // ... autres activités
+    {
+      id: "act-002",
+      commit: "e5f6g7h",
+      message: "chore: Tech Watch & Coffee",
+      date: "2024-01-10",
+      author: "Julien Adoboe",
+      tags: ["Coffee", "Learning", "Innovation"],
+      description:
+        "Session de veille technologique hebdomadaire accompagnée d'un bon café. Exploration des dernières features de React 19 et discussion sur l'architecture Micro-Frontend.",
+      videoUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+      details: {
+        topic: "React 19 & Server Components",
+        coffee_consumed: "3 cups ☕",
+        key_takeaway: "Performance boost expected",
+      },
+      images: [
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1172&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1170&auto=format&fit=crop",
+      ],
+    },
   ];
 
-  const visibleActivity = showMore ? activities : activities.slice(0, 4);
-
   return (
-    <section
-      id="management"
-      className="section-padding bg-gray-50 dark:bg-gray-800"
-      ref={ref}
-    >
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Mes Activités{" "}
-            <span className="bg-gradient-to-r from-wax-yellow via-wax-orange to-wax-red bg-clip-text text-transparent">
-              Loisire & Joie
-            </span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-wax-yellow to-wax-orange mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Organisation d’une activité team-building ludique et stratégique
-            pour renforcer la cohésion, la communication et la motivation d’une
-            équipe pluridisciplinaire.
-          </p>
-        </motion.div>
-
-        {/* Main Experience Highlight */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gradient-to-br from-wax-yellow/10 via-wax-orange/10 to-wax-red/10 dark:from-wax-yellow/5 dark:via-wax-orange/5 dark:to-wax-red/5 rounded-2xl p-8 md:p-12 mb-16 border-l-4 border-wax-orange"
-        >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="inline-block px-4 py-2 bg-wax-orange/20 text-wax-orange dark:text-wax-yellow rounded-full text-sm font-semibold mb-4">
-                {experience.period}
-              </div>
-              <h3 className="text-3xl font-bold mb-2 text-gray-800 dark:text-white">
-                {experience.role}
-              </h3>
-              <p className="text-xl text-wax-orange dark:text-wax-yellow font-semibold mb-4">
-                {experience.company} - {experience.project}
-              </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                {experience.description}
-              </p>
+    <>
+      <section
+        id="activites"
+        className="section-padding bg-white dark:bg-[#0d1117] text-gray-600 dark:text-gray-300 font-mono"
+        ref={ref}
+      >
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-[#00f3ff] uppercase bg-[#00f3ff]/10 rounded-full">
+              git log --activities
             </div>
-            <div className="space-y-3">
-              {experience.highlights.map((highlight, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={
-                    isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
-                  }
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  className="flex items-start gap-3 bg-white dark:bg-gray-700 p-4 rounded-lg"
-                >
-                  <div className="w-2 h-2 bg-wax-orange rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-gray-700 dark:text-gray-300">
-                    {highlight}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div> */}
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black dark:text-white">
+              <span className="text-[#00f3ff]">$</span> Commit History
+            </h2>
+            <p className="max-w-2xl mx-auto text-gray-500 dark:text-gray-400">
+              Une trace de mes activités extra-professionnelles et moments de
+              vie.
+            </p>
+          </motion.div>
 
-        {/* Management Skills Grid */}
-
-        <div className="grid justify-center md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {visibleActivity.map((Activity, index) => {
-            return (
+          <div className="flex flex-wrap justify-center gap-8">
+            {activities.map((activity, index) => (
               <motion.div
-                key={index}
+                key={activity.id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={
                   isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
                 }
-                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-                className="group bg-white dark:bg-gray-900 rounded-xl p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="w-full md:w-[45%] lg:w-[48%] border border-gray-200 dark:border-[#30363d] rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => setSelectedActivity(activity)}
               >
-                {/* Slider d'images automatique */}
-                <div className="relative w-full h-[28rem] mb-6 overflow-hidden rounded-lg">
-                  <Swiper
-                    modules={[Autoplay, Pagination]}
-                    spaceBetween={0}
-                    slidesPerView={1}
-                    loop={true}
-                    autoplay={{
-                      delay: 3000, // Change toutes les 3 secondes
-                      disableOnInteraction: false,
-                      pauseOnMouseEnter: true, // Pause au survol (bon UX)
-                    }}
-                    pagination={{ clickable: true }}
-                    className="h-full"
-                  >
-                    {Activity.images.map(
-                      (
-                        imgSrc,
-                        imgIndex // ← images au pluriel !
-                      ) => (
-                        <SwiperSlide key={imgIndex}>
-                          <img
-                            src={imgSrc}
-                            alt={`${Activity.title} - photo ${imgIndex + 1}`}
-                            className="w-full h-full object-cover object-center"
-                          />
-                        </SwiperSlide>
-                      )
+                <div className="p-6">
+                  {/* Commit Header */}
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-2 text-sm">
+                    <span className="text-yellow-500 font-bold">
+                      commit {activity.commit}
+                    </span>
+                    <span className="text-gray-600 dark:text-gray-500">
+                      Author: {activity.author}
+                    </span>
+                    <span className="text-gray-600 dark:text-gray-500">
+                      Date: {activity.date}
+                    </span>
+                  </div>
+
+                  {/* Commit Message */}
+                  <h3 className="text-xl font-bold text-black dark:text-white mb-4">
+                    {activity.message}
+                  </h3>
+
+                  {/* Simplified Content Preview */}
+                  <div className="bg-gray-100 dark:bg-[#161b22] border border-gray-200 dark:border-[#30363d] rounded-lg p-4 hover:border-[#00f3ff]/50 transition-colors">
+                    {activity.images && activity.images.length > 0 && (
+                      <div className="w-full h-[200px] overflow-hidden rounded border border-gray-200 dark:border-[#30363d] relative mb-4">
+                        <img
+                          src={activity.images[0]}
+                          alt={activity.message}
+                          className="w-full h-full object-cover object-center"
+                        />
+                      </div>
                     )}
-                  </Swiper>
-
-                  {/* Optionnel : overlay sympa au hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10" />
-                </div>
-
-                <h4 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
-                  {Activity.title}
-                </h4>
-
-                <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
-                  {Activity.description}
-                </p>
-
-                <div className="space-y-2">
-                  {Activity.achievements.map((achievement, achIndex) => (
-                    <div
-                      key={achIndex}
-                      className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
-                    >
-                      <div
-                        className={`w-1.5 h-1.5 bg-${Activity.color} rounded-full`}
-                      />
-                      <span>{achievement}</span>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300 text-sm truncate">
+                      {activity.description}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {activity.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 text-xs rounded bg-cyan-100 text-cyan-800 border border-cyan-200 dark:bg-[#00f3ff]/10 dark:text-[#00f3ff] dark:border-[#00f3ff]/20"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </motion.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-        {/* Boutton voir plus  */}
-        <div className="flex justify-center mt-20">
-          <button
-            onClick={() => setShowMore(!showMore)}
-            className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition"
-          >
-            {showMore ? "Voir moins" : "Voir plus"}
-          </button>
-        </div>
-      </div>
-    </section>
+      </section>
+
+      <ActivityModal
+        activity={selectedActivity}
+        onClose={() => setSelectedActivity(null)}
+      />
+    </>
   );
 };
 

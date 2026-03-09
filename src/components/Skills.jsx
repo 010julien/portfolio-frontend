@@ -1,22 +1,15 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { skillsApi } from "../lib/api";
+import { useInView, motion } from "framer-motion";
+import { skillsData } from "../data/skills";
 
 const Skills = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  // Fetch skills grouped by categories from API
-  const {
-    data: skillsData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["skills-by-categories"],
-    queryFn: () => skillsApi.getByCategories().then((res) => res.data),
-  });
+  // Use static skills data
+  const isLoading = false;
+  const isError = false;
+
 
   // Transform API data to match component structure
   const skillCategories = skillsData

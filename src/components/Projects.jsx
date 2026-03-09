@@ -1,31 +1,23 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInView, motion, AnimatePresence } from "framer-motion";
 import {
-  ExternalLink,
-  Github,
-  Calendar,
-  Users,
   ChevronLeft,
   ChevronRight,
+  Users,
+  Calendar,
+  ExternalLink,
+  Github,
 } from "lucide-react";
-import { projectsApi } from "../lib/api";
+import { projects } from "../data/projects";
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch projects from API
-  const {
-    data: projects = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["projects"],
-    queryFn: () => projectsApi.getAll().then((res) => res.data),
-  });
+  // Use static projects data
+  const isLoading = false;
+  const isError = false;
 
   const nextProject = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
@@ -144,104 +136,120 @@ const Projects = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.5 }}
-                className="group bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
+                className="relative"
               >
-                <div className="grid md:grid-cols-3 gap-0">
-                  {/* Icon/Visual Section */}
-                  <div
-                    className={`relative bg-gradient-to-br ${currentProject.color} flex items-center justify-center`}
-                  >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        delay: 0.2,
-                      }}
-                      className={
-                        currentProject.icon?.startsWith("http")
-                          ? ""
-                          : " text-9xl width-full height-full"
-                      }
-                    >
-                      {currentProject.icon?.startsWith("http") ? (
-                        <img
-                          src={currentProject.icon}
-                          alt={currentProject.title}
-                          className="pl-4 h-[18rem] "
-                        />
-                      ) : (
-                        currentProject.icon
-                      )}
-                    </motion.div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="md:col-span-2 p-8">
-                    <div className="mb-4 relative flex items-center justify-between">
-                      <h3
-                        className={`text-3xl font-bold mb-3 bg-gradient-to-r ${currentProject.color} bg-clip-text `}
+                {/* Main Card with Image Background */}
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                  {/* Full Background Image */}
+                  <div className="relative h-[500px] md:h-[600px]">
+                    {currentProject.image?.startsWith("http") ||
+                    currentProject.image?.startsWith("/") ? (
+                      <img
+                        src={currentProject.image}
+                        alt={currentProject.title}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    ) : (
+                      <div
+                        className={`w-full h-full bg-gradient-to-br ${currentProject.color} flex items-center justify-center text-9xl`}
                       >
-                        {currentProject.title}
-                      </h3>
-
-                      <div className=" top-4 left-4">
-                        <span
-                          className={`px-3 py-1 border backdrop-blur-sm bg-gradient-to-r ${currentProject.color} bg-clip-text text-sm font-semibold rounded-full`}
-                        >
-                          {currentProject.category}
-                        </span>
+                        {currentProject.image}
                       </div>
-                    </div>
+                    )}
 
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                      {currentProject.description}
-                    </p>
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
 
-                    {/* Project Details */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <Users className="w-4 h-4 text-wax-orange" />
-                        <span>{currentProject.team}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <Calendar className="w-4 h-4 text-wax-blue" />
-                        <span>{currentProject.duration}</span>
-                      </div>
-                      <div className="text-sm font-semibold text-wax-green dark:text-wax-yellow">
-                        {currentProject.role}
-                      </div>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {currentProject.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-4">
-                      <button
-                        className={`flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${currentProject.color} dark:border-gray-600 border-2 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300`}
+                    {/* Category Badge - Top Right */}
+                    <div className="absolute top-6 right-6">
+                      <span
+                        className={`px-4 py-2 bg-gradient-to-r ${currentProject.color} text-white text-sm font-bold rounded-full shadow-lg`}
                       >
-                        <ExternalLink className="w-4 h-4" />
-                        Voir le projet
-                      </button>
-                      <button className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
-                        <Github className="w-4 h-4" />
-                        Code source
-                      </button>
+                        {currentProject.category}
+                      </span>
+                    </div>
+
+                    {/* Project Number - Top Left */}
+                    <div className="absolute top-6 left-6">
+                      <span className="text-white/30 text-8xl font-black">
+                        0{currentIndex + 1}
+                      </span>
+                    </div>
+
+                    {/* Content Overlay - Bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        {/* Title */}
+                        <h3 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
+                          {currentProject.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-gray-200 text-lg mb-6 max-w-3xl leading-relaxed">
+                          {currentProject.description}
+                        </p>
+
+                        {/* Project Meta Info */}
+                        <div className="flex flex-wrap items-center gap-6 mb-6">
+                          <div className="flex items-center gap-2 text-white/80">
+                            <Users className="w-5 h-5 text-cyan-400" />
+                            <span className="font-medium">
+                              {currentProject.team}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-white/80">
+                            <Calendar className="w-5 h-5 text-yellow-400" />
+                            <span className="font-medium">
+                              {currentProject.duration}
+                            </span>
+                          </div>
+                          <div className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full">
+                            <span className="text-emerald-400 font-semibold">
+                              {currentProject.role}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Technologies */}
+                        <div className="flex flex-wrap gap-2 mb-8">
+                          {currentProject.technologies.map(
+                            (tech, techIndex) => (
+                              <span
+                                key={techIndex}
+                                className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-sm font-medium text-white hover:bg-white/20 transition-colors"
+                              >
+                                {tech}
+                              </span>
+                            ),
+                          )}
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap gap-4">
+                          <a
+                            href={currentProject.link}
+                            className={`group flex items-center gap-3 px-8 py-4 bg-gradient-to-r ${currentProject.color} text-white rounded-2xl font-bold shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
+                          >
+                            <ExternalLink className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                            Voir le projet
+                          </a>
+                          <a
+                            href={currentProject.github}
+                            className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white rounded-2xl font-bold hover:bg-white/20 transition-all duration-300"
+                          >
+                            <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                            Code source
+                          </a>
+                        </div>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
