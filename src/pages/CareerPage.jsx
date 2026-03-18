@@ -82,29 +82,27 @@ const CareerPage = ({ darkMode, toggleDarkMode }) => {
           name: "Nicole Mia",
           role: language === "fr" ? "Bénévole" : "Volunteer",
           avatar: "👩‍💼",
-          image:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face",
+          image: "",
           isYou: false,
           socials: { facebook: "#", twitter: "#", instagram: "#", phone: "#" },
         },
         {
-          name: "David Chen",
+          name: "Kotche Mercelin",
           role: "Lead Designer",
           avatar: "🎨",
-          image:
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+          image: "",
           isYou: false,
           socials: { facebook: "#", twitter: "#", instagram: "#" },
         },
-        {
-          name: "Sarah Johnson",
-          role: "Backend Dev",
-          avatar: "⚙️",
-          image:
-            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-          isYou: false,
-          socials: { facebook: "#", twitter: "#", instagram: "#" },
-        },
+        // {
+        //   name: "Sarah Johnson",
+        //   role: "Backend Dev",
+        //   avatar: "⚙️",
+        //   image:
+        //     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
+        //   isYou: false,
+        //   socials: { facebook: "#", twitter: "#", instagram: "#" },
+        // },
       ],
       projects: [
         {
@@ -150,24 +148,22 @@ const CareerPage = ({ darkMode, toggleDarkMode }) => {
           name: "ADOBOE Comlan Julien",
           role: "CTO",
           avatar: "👨‍💻",
-          image:
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+          image: "/src/images/Julien.jpg",
           isYou: true,
           socials: { linkedin: "#", twitter: "#", github: "#" },
         },
         {
-          name: "Partenaire",
+          name: "APETOBGO Joèl",
           role: "CEO",
           avatar: "👤",
-          image:
-            "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
+          image: "",
           isYou: false,
           socials: { linkedin: "#", twitter: "#" },
         },
       ],
       projects: [
         {
-          name: "Projet Principal",
+          name: "Foncira",
           icon: "⚡",
           status: language === "fr" ? "En conception" : "In design",
           statusColor: "blue",
